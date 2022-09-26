@@ -1,3 +1,3 @@
 import { combineReducers } from "redux";
-import productReducer from "./components/Redux/Product/productReducer"
+import productReducer from "./Product/productReducer"
 export const rootReducer=combineReducers({productReducer})

@@ -37,7 +37,6 @@ export default function EditProduct() {
   const back=()=>{
     history.push('/Product')
   }
-  
 
   const location = useLocation();
   console.log(location.state,"LOCCCCC"); 

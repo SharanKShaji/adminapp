@@ -4,9 +4,9 @@ import { fetchProductFailure, fetchProductSuccess } from "../components/Redux/Pr
 
 export const fetchProduct = () => {
     return (dispatch) => {
-      axios.post("http://localhost:9000/productData")
+      axios.get("http://localhost:9000/productData")
         .then((res) => {
-          console.log(res.data.result,"CHECKING")
+          console.log(res,"CHECKING_DATA")
           if(res.data.success){
             dispatch(fetchProductSuccess(res.data.result))
           }
@@ -17,3 +17,14 @@ export const fetchProduct = () => {
         })
     }
   }
+
+export const fetchRemove =  (id) => {
+  return async () => {
+    await axios
+      .post("http://localhost:9000/Deleteproduct", { id: id })  
+      .then((res)=>{
+        console.log(res,"DELETED RESPONSE");
+      })
+  };
+}
+
