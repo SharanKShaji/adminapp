@@ -39,7 +39,7 @@ export default function EditProduct() {
   }
 
   const location = useLocation();
-  console.log(location.state,"LOCCCCC"); 
+  console.log(location,"LOCCCCC"); 
   const id = location.state;
 
   React.useEffect(()=>{

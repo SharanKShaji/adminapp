@@ -34,7 +34,6 @@ function Product() {
     .then(()=>{
       dispatch(fetchProduct())
     })
-    
   }
 
   const editProduct=(id)=>{

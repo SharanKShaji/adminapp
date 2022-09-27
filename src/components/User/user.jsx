@@ -7,55 +7,49 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from "axios"
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-axios.get("http://localhost:9000/userData")
-.then((res)=>{
-  console.log(res.data.result,"ADMIN CHECK");
-})
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import Visibility from '@mui/icons-material/Visibility';
+import { Link } from 'react-router-dom';
 
 export default function User() {
+  const [userData,setUserData]=React.useState("")
+
+  React.useEffect(()=>{
+  axios.get("http://localhost:9000/userData")
+.then((res)=>{
+  console.log(res.data.result,"ADMIN CHECK");
+  setUserData(res.data.result)
+})
+},[])
+
   return (
     <TableContainer component={Paper}>
       <h1>User Table</h1>
-      <Table sx={{ minWidth: 650 }} style={{ width: 1000,margin:'auto'}}aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} style={{ width: 500,margin:'auto'}}aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell align="left">USER ID</TableCell>
+            <TableCell align="center">USERNAME</TableCell>
+            <TableCell align="center">CART ID</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {userData && userData.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
+              <TableCell >
+                {row.id}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="center">{row.username}</TableCell>
+              <TableCell align="center">{row.cart_id}</TableCell>
+              <TableCell align="center"><Link to={`/Details/${row.id}`}><Visibility/></Link></TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    
   );
 }

@@ -10,6 +10,7 @@ import AddProduct from "./components/Addproduct/addProduct";
 import EditProduct from "./EditProduct/editProduct";
 import { Provider } from "react-redux";
 import store from "../src/components/Redux/store"
+import Details from "./components/Details/details";
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
             </Route>
             <Route path="/Editproduct">
               <EditProduct></EditProduct>
+            </Route>
+            <Route path="/Details/:userId">
+              <Details></Details>
             </Route>
           </Switch>
         </BrowserRouter>
