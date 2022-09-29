@@ -1,4 +1,4 @@
-import { Box, Button, Icon, TextField } from "@mui/material";
+import { Box, Button, Icon, Input, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -13,29 +13,53 @@ function AddProduct() {
   const [description, Setdescription] = useState("");
   const [stock, setStock] = useState("");
   const [status, setStatus] = useState("");
+  const[file,setFile]=useState("");
 
   const addProduct = () => {
-    axios
-      .post("http://localhost:9000/Addproduct", {
-        category: category,
-        supplier: supplier,
-        name: name,
-        image: image,
-        price: price,
-        description: description,
-        stock: stock,
-        status: status,
-      })
-      .then((res) => {
-        console.log(res.data.success);
-        if(res.data.success==true){
-          toast.success("ADDED SUCCESSFULLY!",{position:toast.POSITION.BOTTOM_CENTER})
-        }
-        else{
-          toast.error("FAILED!",{position:toast.POSITION.BOTTOM_CENTER})
-        }
-      });
-  };
+    // axios
+    //   .post("http://localhost:9000/Addproduct", {
+    //     category: category,
+    //     supplier: supplier,
+    //     name: name,
+    //     image: image,
+    //     price: price,
+    //     description: description,
+    //     stock: stock,
+    //     status: status,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data.success);
+    //     if(res.data.success==true){
+    //       toast.success("ADDED SUCCESSFULLY!",{position:toast.POSITION.BOTTOM_CENTER})
+    //     }
+    //     else{
+    //       toast.error("FAILED!",{position:toast.POSITION.BOTTOM_CENTER})
+    //     }
+    //   });
+    const formData = new FormData();
+        formData.append('category',category);
+        formData.append('supplier',supplier);
+        formData.append('name',name);
+        formData.append('file',file);
+        formData.append('price',price);
+        formData.append('description',description);
+        formData.append('stock',stock);
+        formData.append('status',status);
+
+        axios.post("http://localhost:9000/Addproduct",
+            formData,
+            {headers:{
+                'content-type':'multipart/form-data'
+            }}
+        ).then((res) => {
+              console.log(res.data.success);
+              if(res.data.success==true){
+                toast.success("ADDED SUCCESSFULLY!",{position:toast.POSITION.BOTTOM_CENTER})
+              }
+              else{
+                toast.error("FAILED!",{position:toast.POSITION.BOTTOM_CENTER})
+              }
+  });
   return (
     <div>
     <h1>ADD PRODUCT</h1>
@@ -68,12 +92,17 @@ function AddProduct() {
         onChange={(e) => setName(e.target.value)}
       />
       <br />
-      <TextField
+      {/* <TextField
         id="filled-basic"
         label="Image Link"
         variant="filled"
         onChange={(e) => setImage(e.target.value)}
-      />
+      /> */}
+      <Input
+      type="file"
+      name="image"
+      onChange={(e)=>setFile(e.target.files[0])}>
+      </Input>
       <br />
       <TextField
         id="filled-basic"
